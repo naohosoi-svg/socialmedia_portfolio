@@ -85,9 +85,9 @@
 
   .eyebrow{
     font-family:"IBM Plex Mono",ui-monospace,monospace;
-    font-size:12.5px;
+    font-size:15px;
     font-weight:600;
-    letter-spacing:0.12em;
+    letter-spacing:0.1em;
     text-transform:uppercase;
     color:var(--accent);
     display:flex;
@@ -228,6 +228,10 @@
   .scope-card .s-desc{ margin-top:10px; font-size:13.5px; color:var(--ink-2); line-height:1.5; }
   @media (max-width:640px){ .scope-grid{ grid-template-columns:1fr; } }
 
+  .s-pill.s-pill-blue{ background:rgba(107,182,214,0.2); color:#2E6B85; }
+  .s-pill.s-pill-yellow{ background:rgba(227,178,60,0.22); color:#8A6414; }
+  .s-pill.s-pill-orange{ background:rgba(232,131,74,0.2); color:#B8583A; }
+
   /* ---- strengths: pain -> answer ---- */
   .pain-list{ margin-top:30px; display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:6px; overflow:hidden; }
   .pain-item{ background:var(--surface); padding:24px 26px; display:grid; grid-template-columns: 1fr 28px 1fr; gap:18px; align-items:center; }
@@ -307,12 +311,15 @@
   }
   .closing .lede{ margin-top:16px; max-width:34em; color:var(--ink-2); font-size:16px; }
   .contact-btn{
-    margin-top:26px; display:inline-flex; align-items:center; gap:10px;
-    background:var(--accent); color:var(--on-accent);
+    position:fixed; bottom:24px; right:24px; z-index:100;
+    display:inline-flex; align-items:center; gap:10px;
+    background:#E8734A; color:#F7F8F3;
     font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:14px;
-    text-decoration:none; padding:14px 26px; border-radius:4px;
+    text-decoration:none; padding:14px 26px; border-radius:999px;
+    box-shadow:0 4px 14px rgba(0,0,0,0.18);
   }
   .contact-btn:hover{ opacity:0.9; }
+  @media (max-width:640px){ .contact-btn{ bottom:16px; right:16px; padding:12px 20px; font-size:13px; } }
 
   footer{
     padding-block:28px 40px; border-top:1px solid var(--line);
@@ -334,8 +341,6 @@
   a{ color:var(--accent); }
   :focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
 </style>
-
-
 </head>
 <body>
 <div class="page-shell">
@@ -344,7 +349,7 @@
 
   <header class="site">
     <div class="mark"><strong>Hosoi Nao</strong> — SNS Direction</div>
-    <a class="cta-link" href="mailto:hosoi.contacts@gmail.com">ご相談・お問い合わせ ↗</a>
+    <a class="cta-link" href="https://mail.google.com/mail/?view=cm&fs=1&to=hosoi.contacts@gmail.com" target="_blank" rel="noopener">ご相談・お問い合わせ ↗</a>
   </header>
 
   <section class="hero" id="top" style="border-top:none;">
@@ -362,6 +367,7 @@
       </div>
       <div class="profile-body">
         <p>株式会社リクルートで結婚領域（ゼクシィ）にてマーケティングの基礎を身につけたのち独立。訪日インバウンド向け・対日本人向けの両方でSNSアカウントを担当しながら、自身のSNSも1.7万フォロワーまで運用。</p>
+        <a class="hc-link" href="https://claude.ai/artifact/FJyY3miHZzJ6FNs3BPXXoL" target="_blank" rel="noopener">さらに細井菜央を知りたい場合はこちら ↗</a>
       </div>
     </div>
 
@@ -428,7 +434,7 @@
     <div class="case">
       <div class="case-head">
         <h3>大手空港 インバウンド観光プログラム</h3>
-        <span class="case-tag">匿名 / 戦略設計・企画・撮影ディレクション・演者指導</span>
+        <span class="case-tag">戦略設計・企画・撮影ディレクション・演者指導</span>
       </div>
       <p class="case-desc">数年前に運用実績があったものの休止していたアカウントを、サービスのローンチ前段階から再稼働。ローンチに向けて期待感を高める投稿を重ね、予約開始日には実際の予約につながる導線を設計・ディレクションしました。</p>
       <div class="highlight-card">
@@ -506,17 +512,30 @@
     </div>
   </section>
 
-  <section class="closing" id="contact">
-    <a class="contact-btn" href="mailto:hosoi.contacts@gmail.com">ご相談はこちらから ↗</a>
+  <section id="other">
+    <div class="eyebrow">OTHER / できること</div>
+    <div class="scope-grid" style="margin-top:20px;">
+      <div class="scope-card">
+        <span class="s-pill s-pill-blue">英語学習支援</span>
+      </div>
+      <div class="scope-card">
+        <span class="s-pill s-pill-yellow">クロスカルチャーガイド</span>
+        <div class="s-desc">日英ガイド・通訳アテンド・和食料理教室</div>
+      </div>
+      <div class="scope-card">
+        <span class="s-pill s-pill-orange">ウェルネス推進</span>
+        <div class="s-desc">イベント企画・開催</div>
+      </div>
+    </div>
   </section>
 
   <footer>
     <span>SNS Direction — Hosoi Nao</span>
-    <span>本ページの実績は許諾の範囲で匿名化して掲載しています</span>
   </footer>
 
   </div>
 </div>
 
+<a class="contact-btn" href="https://mail.google.com/mail/?view=cm&fs=1&to=hosoi.contacts@gmail.com" target="_blank" rel="noopener">ご相談はこちらから ↗</a>
 </body>
 </html>
