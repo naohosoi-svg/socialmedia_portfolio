@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SNSディレクション</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Newsreader:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@500;600&family=Fraunces:ital,wght@0,600;1,500;1,600&display=swap');
+
+  :root{
+    --bg:#FFFFFF;
+    --surface:#FFFFFF;
+    --surface-2:#F3F3F1;
+    --ink:#171B1A;
+    --ink-2:#5B635C;
+    --line:#E3E3DF;
+    --accent:#B8583A;
+    --accent-bg:rgba(184,88,58,0.08);
+    --signal:#1C7A52;
+    --signal-bg:rgba(28,122,82,0.08);
+    --on-accent:#F7F8F3;
+    --hero-grad: linear-gradient(135deg, #FBEAE0 0%, #F6D9DC 45%, #FCEFD2 100%);
+    --shadow: 0 1px 2px rgba(23,27,26,0.03), 0 8px 24px -12px rgba(23,27,26,0.08);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#12151A;
+      --surface:#191E22;
+      --surface-2:#20262B;
+      --ink:#ECEEE8;
+      --ink-2:#98A199;
+      --line:#2A3138;
+      --accent:#E39572;
+      --accent-bg:rgba(227,149,114,0.14);
+      --signal:#4FD79B;
+      --signal-bg:rgba(79,215,155,0.12);
+      --on-accent:#12151A;
+      --hero-grad: linear-gradient(135deg, #34241F 0%, #3A2528 45%, #362D1E 100%);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12151A;
+    --surface:#191E22;
+    --surface-2:#20262B;
+    --ink:#ECEEE8;
+    --ink-2:#98A199;
+    --line:#2A3138;
+    --accent:#E39572;
+    --accent-bg:rgba(227,149,114,0.14);
+    --signal:#4FD79B;
+    --signal-bg:rgba(79,215,155,0.12);
+    --on-accent:#12151A;
+    --hero-grad: linear-gradient(135deg, #34241F 0%, #3A2528 45%, #362D1E 100%);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Newsreader","Iowan Old Style",Georgia,serif;
+    font-size:17px;
+    line-height:1.6;
+    padding:0 24px;
+  }
+  ::selection{ background:var(--accent); color:var(--surface); }
+
+  .page-shell{ display:flex; align-items:flex-start; max-width:1080px; margin:0 auto; gap:8px; }
+  .wrap{ max-width:960px; margin:0; flex:1; min-width:0; }
+
+  /* ---- index rail ---- */
+  .index-rail{
+    flex:none; width:52px;
+    position:sticky; top:0;
+    height:100vh;
+    display:flex; flex-direction:column; align-items:center;
+    padding-block:26px;
+    border-right:1px solid var(--line);
+  }
+  .index-rail .rail-mark{
+    font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:12px;
+    color:var(--ink); text-decoration:none;
+    border:1px solid var(--line); border-radius:3px;
+    width:26px; height:26px; display:flex; align-items:center; justify-content:center;
+    flex:none;
+  }
+  .index-rail .rail-links{
+    margin-top:36px; flex:1;
+    display:flex; flex-direction:column; align-items:center;
+    justify-content:center; gap:34px;
+  }
+  .index-rail a.rail-link{
+    writing-mode:vertical-rl;
+    font-family:"IBM Plex Mono",monospace; font-size:11.5px; font-weight:600;
+    letter-spacing:0.08em;
+    color:var(--ink-2); text-decoration:none;
+    padding-block:4px;
+    border-left:2px solid transparent;
+  }
+  .index-rail a.rail-link:hover{ color:var(--accent); border-left-color:var(--accent); }
+  .index-rail .rail-foot{
+    font-family:"IBM Plex Mono",monospace; font-size:9.5px; color:var(--ink-2);
+    writing-mode:vertical-rl; letter-spacing:0.06em; opacity:0.7;
+  }
+  @media (max-width:860px){ .index-rail{ display:none; } }
+
+  h1,h2,h3{
+    font-family:"Bricolage Grotesque",system-ui,sans-serif;
+    text-wrap:balance;
+    margin:0;
+    color:var(--ink);
+  }
+
+  .mono{
+    font-family:"IBM Plex Mono",ui-monospace,"SF Mono",monospace;
+    font-variant-numeric:tabular-nums;
+  }
+
+  .eyebrow{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--accent);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:18px; height:1px;
+    background:var(--accent);
+    display:inline-block;
+  }
+
+  /* header */
+  header.site{
+    padding-block:22px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    border-bottom:1px solid var(--line);
+  }
+  .mark{
+    font-family:"IBM Plex Mono",monospace;
+    font-weight:600;
+    font-size:13px;
+    letter-spacing:0.04em;
+    color:var(--ink-2);
+  }
+  .mark strong{ color:var(--ink); }
+  .cta-link{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:13px;
+    font-weight:600;
+    color:var(--accent);
+    text-decoration:none;
+    border-bottom:1px solid currentColor;
+    padding-bottom:2px;
+    white-space:nowrap;
+  }
+  .cta-link:hover{ opacity:0.75; }
+
+  /* hero — soft gradient panel */
+  .hero{
+    margin-top:28px;
+    background:var(--hero-grad);
+    color:var(--ink);
+    padding: 52px 40px 46px;
+    border-radius:2px;
+  }
+  .hero .eyebrow{ color:var(--accent); }
+  .hero h1{
+    color:var(--ink);
+    font-size:clamp(32px, 5.4vw, 56px);
+    font-weight:800;
+    line-height:1.1;
+    margin-top:20px;
+    letter-spacing:-0.015em;
+  }
+  .hero h1 em{
+    font-family:"Fraunces","Newsreader",Georgia,serif;
+    font-style:italic;
+    font-weight:600;
+    color:var(--accent);
+  }
+  .hero .lede{ margin-top:22px; max-width:36em; font-size:18px; color:var(--ink); }
+  .hero .lede-2{ margin-top:10px; max-width:36em; font-size:15px; color:var(--ink-2); }
+  @media (max-width:640px){ .hero{ padding:36px 24px 32px; margin-top:20px; } }
+
+  section{ padding-block:52px; border-top:1px solid var(--line); }
+  section .sec-head h2{
+    font-size:clamp(22px,3.2vw,28px);
+    font-weight:700;
+    line-height:1.3;
+    margin-top:18px;
+  }
+  section .sec-lede{
+    margin-top:10px;
+    max-width:40em;
+    color:var(--ink-2);
+    font-size:15.5px;
+  }
+
+  /* ---- profile ---- */
+  .profile-grid{
+    margin-top:30px;
+    display:grid;
+    grid-template-columns: 200px 1fr;
+    gap:36px;
+    align-items:start;
+  }
+  .profile-id .name{
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-weight:700;
+    font-size:21px;
+  }
+  .profile-id .role{
+    margin-top:4px;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:12.5px;
+    color:var(--ink-2);
+  }
+  .profile-id .stack{
+    margin-top:18px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .profile-id .stack span{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11.5px;
+    color:var(--ink-2);
+    border-left:2px solid var(--line);
+    padding-left:8px;
+  }
+  .profile-body p{ margin:0 0 14px; font-size:16px; }
+  .profile-body p:last-child{ margin-bottom:0; }
+  .profile-body strong{ color:var(--accent); font-weight:600; }
+
+  /* ---- scope of work ---- */
+  .scope-label{
+    margin-top:36px;
+    font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600;
+    letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-2);
+  }
+  .scope-grid{
+    margin-top:14px;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); border-radius:6px;
+    overflow:hidden;
+  }
+  .scope-card{ background:var(--surface); padding:20px 22px; }
+  .scope-card .s-pill{
+    display:inline-block; background:var(--accent); color:var(--on-accent);
+    font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:12.5px;
+    letter-spacing:0.02em; padding:6px 16px; border-radius:999px;
+  }
+  .scope-card .s-desc{ margin-top:10px; font-size:13.5px; color:var(--ink-2); line-height:1.5; }
+  @media (max-width:640px){ .scope-grid{ grid-template-columns:1fr; } }
+
+  /* ---- strengths: pain -> answer ---- */
+  .pain-list{ margin-top:30px; display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:6px; overflow:hidden; }
+  .pain-item{ background:var(--surface); padding:24px 26px; display:grid; grid-template-columns: 1fr 28px 1fr; gap:18px; align-items:center; }
+  .pain-item .pain{ font-size:15px; color:var(--ink-2); }
+  .pain-item .pain::before{ content:"「"; }
+  .pain-item .pain::after{ content:"」"; }
+  .pain-item .arrow{ font-family:"IBM Plex Mono",monospace; color:var(--accent); font-size:16px; text-align:center; }
+  .pain-item .answer{ font-size:15.5px; }
+  .pain-item .answer strong{ color:var(--accent); font-weight:600; }
+  @media (max-width:640px){
+    .pain-item{ grid-template-columns:1fr; }
+    .pain-item .arrow{ transform:rotate(90deg); }
+  }
+
+  /* ---- case group headers ---- */
+  .group-head{ margin-top:30px; }
+  .group-head:not(.first){ margin-top:48px; padding-top:36px; border-top:1px solid var(--line); }
+  .group-head .g-label{
+    font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600;
+    letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);
+    display:flex; align-items:center; gap:10px;
+  }
+  .group-head .g-label::after{ content:""; flex:1; height:1px; background:var(--line); }
+  .group-head .g-note{ margin-top:6px; font-size:13.5px; color:var(--ink-2); max-width:38em; }
+
+  /* ---- case cards ---- */
+  .case{ margin-top:36px; }
+  .case + .case{ padding-top:36px; border-top:1px solid var(--line); }
+  .case-head{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  .case-head h3{ font-size:20px; font-weight:700; }
+  .case-tag{ font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--on-accent); background:var(--accent); border-radius:999px; padding:5px 14px; white-space:nowrap; }
+  .case-note{ margin-top:6px; font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--ink-2); }
+  .case-desc{ margin-top:14px; font-size:15.5px; max-width:42em; }
+
+  .stat-row{ margin-top:18px; display:flex; flex-wrap:wrap; gap:10px 28px; }
+  .stat{ display:flex; flex-direction:column; gap:2px; }
+  .stat .v{ font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:19px; color:var(--ink); }
+  .stat .l{ font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--ink-2); }
+
+  .highlight-card{ margin-top:18px; background:var(--accent-bg); border:1px solid var(--line); border-radius:6px; padding:18px 20px; }
+  .highlight-card .hc-tag{ font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--accent); font-weight:600; letter-spacing:0.04em; }
+  .highlight-card .hc-body{ margin-top:8px; font-size:14.5px; }
+  .highlight-card .hc-num{ margin-top:10px; font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:20px; color:var(--signal); }
+  .hc-link{ display:inline-block; margin-top:10px; font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--accent); text-decoration:none; border-bottom:1px solid var(--accent); }
+  .hc-link:hover{ opacity:0.7; }
+
+  .placeholder{ margin-top:18px; border:1px dashed var(--line); border-radius:6px; padding:18px 20px; display:flex; align-items:center; gap:10px; }
+  .placeholder .dot{ width:7px; height:7px; border-radius:50%; background:var(--ink-2); flex:none; }
+  .placeholder span{ font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--ink-2); }
+
+  /* ---- personal SNS: tier spectrum ---- */
+  .tier-row{ margin-top:22px; display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:6px; overflow:hidden; }
+  .tier{ background:var(--surface); padding:16px 16px; }
+  .tier .t-label{ font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--accent); font-weight:600; letter-spacing:0.03em; }
+  .tier .t-body{ margin-top:6px; font-size:13.5px; color:var(--ink-2); line-height:1.5; }
+  @media (max-width:640px){ .tier-row{ grid-template-columns:1fr; } }
+
+  /* post insight cards */
+  .post-grid{ margin-top:22px; display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  @media (max-width:720px){ .post-grid{ grid-template-columns:1fr; } }
+  .post-card{ background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:20px; box-shadow:var(--shadow); }
+  .post-card .p-tag{ display:inline-block; font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:0.04em; text-transform:uppercase; color:var(--on-accent); background:var(--accent); border-radius:999px; padding:5px 12px; }
+  .post-card .p-title{ margin-top:10px; font-size:16px; font-weight:600; font-family:"Bricolage Grotesque",sans-serif; }
+  .post-card .p-stats{ margin-top:14px; display:grid; grid-template-columns:repeat(3,1fr); gap:10px 14px; padding-top:14px; border-top:1px solid var(--line); }
+  .post-card .p-stat .v{ font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:15px; }
+  .post-card .p-stat .l{ font-family:"IBM Plex Mono",monospace; font-size:10.5px; color:var(--ink-2); margin-top:2px; }
+
+  .grid-note{ margin-top:16px; font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--ink-2); }
+  .grid-note .val{ color:var(--ink); font-weight:600; }
+
+  /* closing */
+  .closing h2{
+    font-family:"Fraunces","Newsreader",Georgia,serif;
+    font-style:italic; font-weight:600;
+    font-size:clamp(26px,4.4vw,40px); line-height:1.28; max-width:16em;
+  }
+  .closing .lede{ margin-top:16px; max-width:34em; color:var(--ink-2); font-size:16px; }
+  .contact-btn{
+    margin-top:26px; display:inline-flex; align-items:center; gap:10px;
+    background:var(--accent); color:var(--on-accent);
+    font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:14px;
+    text-decoration:none; padding:14px 26px; border-radius:4px;
+  }
+  .contact-btn:hover{ opacity:0.9; }
+
+  footer{
+    padding-block:28px 40px; border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+    font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--ink-2);
+  }
+
+  @media (max-width:640px){
+    header.site{ flex-wrap:wrap; }
+    .profile-grid{ grid-template-columns:1fr; gap:20px; }
+  }
+
+  @media (prefers-reduced-motion:no-preference){
+    .hero h1, .hero .lede{ animation:rise 0.5s ease-out both; }
+    .hero .lede-2{ animation:rise 0.5s ease-out 0.08s both; }
+    @keyframes rise{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:translateY(0); } }
+  }
+
+  a{ color:var(--accent); }
+  :focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+</style>
+</head>
+<body>
+
+<div class="page-shell">
+
+  <nav class="index-rail" aria-label="ページ内目次">
+    <a class="rail-mark" href="#top">HN</a>
+    <div class="rail-links">
+      <a class="rail-link" href="#profile">プロフィール</a>
+      <a class="rail-link" href="#case">実績</a>
+      <a class="rail-link" href="#contact">お問い合わせ</a>
+    </div>
+    <span class="rail-foot">SNS DIRECTION</span>
+  </nav>
+
+  <div class="wrap">
+
+  <header class="site">
+    <div class="mark"><strong>Hosoi Nao</strong> — SNS Direction</div>
+    <a class="cta-link" href="mailto:hosoi.contacts@gmail.com">ご相談・お問い合わせ ↗</a>
+  </header>
+
+  <section class="hero" id="top" style="border-top:none;">
+    <div class="eyebrow">SNS DIRECTION</div>
+    <h1>国内外のオーディエンスに向けた<br><em>SNSディレクション実績</em></h1>
+    <p class="lede">訪日インバウンド向け・対日本人向け、複数のアカウントでSNSディレクションを担当してきました。</p>
+  </section>
+
+  <section id="profile">
+    <div class="eyebrow">PROFILE</div>
+    <div class="profile-grid">
+      <div class="profile-id">
+        <div class="name">細井 菜央</div>
+        <div class="role">Hosoi Nao</div>
+      </div>
+      <div class="profile-body">
+        <p>株式会社リクルートで結婚領域（ゼクシィ）にてマーケティングの基礎を身につけたのち独立。訪日インバウンド向け・対日本人向けの両方でSNSアカウントを担当しながら、自身のSNSも1.7万フォロワーまで運用。</p>
+      </div>
+    </div>
+
+    <div class="scope-label">対応領域</div>
+    <div class="scope-grid">
+      <div class="scope-card">
+        <span class="s-pill">戦略設計</span>
+        <div class="s-desc">アカウントの目的に合わせた戦略設計</div>
+      </div>
+      <div class="scope-card">
+        <span class="s-pill">企画</span>
+        <div class="s-desc">投稿の企画・構成</div>
+      </div>
+      <div class="scope-card">
+        <span class="s-pill">撮影ディレクション</span>
+        <div class="s-desc">現場での撮影ディレクション</div>
+      </div>
+      <div class="scope-card">
+        <span class="s-pill">編集</span>
+        <div class="s-desc">ショート動画中心の編集（CapCut使用）</div>
+      </div>
+      <div class="scope-card">
+        <span class="s-pill">演者指導</span>
+        <div class="s-desc">演者への指導・マネジメント</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="case">
+    <div class="eyebrow">WORKS / 実績</div>
+    <div class="sec-lede">訪日インバウンド向けと対日本人向けでアカウントの役割が異なるため、2つに分けてご紹介します。</div>
+
+    <div class="group-head first">
+      <div class="g-label">01 — 英語圏・訪日ユーザー向け</div>
+      <div class="g-note">訪日旅行者を対象にした観光メディアの企画・撮影・編集・ディレクション。認知獲得から予約・利用（CV）までの導線設計を担当。</div>
+    </div>
+
+    <div class="case">
+      <div class="case-head">
+        <h3>Travel Japan Together</h3>
+        <span class="case-tag">企画・撮影ディレクション・演者指導</span>
+      </div>
+      <p class="case-desc">22.5万人の英語圏の訪日旅行者向け観光メディアの企画・撮影・演者指導を担当。</p>
+      <div class="highlight-card">
+        <div class="hc-tag">PR案件例</div>
+        <div class="hc-body">ラゲッジ配送サービス「bounce」とのタイアップ投稿「Travel Japan Without Your Bags」。旅行者の実用的な悩みに応える、機能的価値を提供するPRコンテンツとして企画。</div>
+        <div class="hc-num">28.1万 <span style="font-size:13px;color:var(--ink-2);font-weight:500;">再生</span></div>
+        <a class="hc-link" href="https://www.instagram.com/reel/Dch8SxGzK_m/?stkn=anRzcGZ5YTgzanVr" target="_blank" rel="noopener">投稿を見る ↗</a>
+      </div>
+      <div class="highlight-card">
+        <div class="hc-tag">お役立ち情報投稿例</div>
+        <div class="hc-body">東京の下町商店街を紹介する街歩きコンテンツ「One of the Best Shopping Streets in Tokyo」。旅行者に役立つ現地情報を届けるお役立ち投稿として企画。</div>
+        <div class="hc-num">19.8万 <span style="font-size:13px;color:var(--ink-2);font-weight:500;">再生</span></div>
+        <a class="hc-link" href="https://www.instagram.com/reel/DbilgAFTGpX/?stkn=N2RuY2tkMHNveDQ0" target="_blank" rel="noopener">投稿を見る ↗</a>
+      </div>
+      <div class="highlight-card">
+        <div class="hc-tag">お役立ち情報投稿例</div>
+        <div class="hc-body">特定の鉄道路線沿いの街を紹介するコンテンツ。沿線ごとの魅力を伝えるお役立ち投稿として企画。</div>
+        <div class="hc-num">47.9万 <span style="font-size:13px;color:var(--ink-2);font-weight:500;">再生</span></div>
+        <a class="hc-link" href="https://www.instagram.com/reel/DcgAcQbznWN/?stkn=MTJtcm5vcWRhZWJkZA==" target="_blank" rel="noopener">投稿を見る ↗</a>
+      </div>
+    </div>
+
+    <div class="case">
+      <div class="case-head">
+        <h3>大手空港 インバウンド観光プログラム</h3>
+        <span class="case-tag">匿名 / 戦略設計・企画・撮影ディレクション・演者指導</span>
+      </div>
+      <p class="case-desc">数年前に運用実績があったものの休止していたアカウントを、サービスのローンチ前段階から再稼働。ローンチに向けて期待感を高める投稿を重ね、予約開始日には実際の予約につながる導線を設計・ディレクションしました。</p>
+      <div class="highlight-card">
+        <div class="hc-tag">実績</div>
+        <div class="hc-body">予約開始日に、実際の予約獲得につながりました。</div>
+      </div>
+    </div>
+
+    <div class="group-head">
+      <div class="g-label">02 — 対日本人向け</div>
+      <div class="g-note">日本国内・日本人を対象にした英語コーチング事業の集客導線設計と、自身のSNSアカウント運用。</div>
+    </div>
+
+    <div class="case">
+      <div class="case-head">
+        <h3>英語コーチング事業</h3>
+        <span class="case-tag">戦略設計・企画・撮影ディレクション・演者指導</span>
+      </div>
+      <p class="case-desc">演者を立てた設計のもと、Instagramのディレクションを担当。集客の入口から商材への問い合わせ獲得までを設計しました(クロージングは別担当の営業が対応)。</p>
+      <div class="highlight-card">
+        <div class="hc-tag">実績</div>
+        <div class="hc-body">単価約40万円の商材の成約につながりました。</div>
+      </div>
+    </div>
+
+    <div class="case">
+      <div class="case-head">
+        <h3>個人SNSアカウント</h3>
+        <span class="case-tag">戦略設計・企画・撮影ディレクション・編集</span>
+      </div>
+      <p class="case-desc">2024年10月から運用。投稿の意図とエンゲージメントを継続的に検証している実験の場。</p>
+      <div class="stat-row">
+        <div class="stat"><span class="v mono">1.7万</span><span class="l">フォロワー</span></div>
+        <div class="stat"><span class="v mono">110万</span><span class="l">最大再生（認知獲得投稿）</span></div>
+      </div>
+
+      <div class="tier-row">
+        <div class="tier">
+          <div class="t-label">01 機能的価値提供</div>
+          <div class="t-body">お役立ち情報系。純粋にリーチを伸ばす目的。</div>
+        </div>
+        <div class="tier">
+          <div class="t-label">02 リーチ×ファン化</div>
+          <div class="t-body">広く届けながら、ファンにもつなげる。</div>
+        </div>
+        <div class="tier">
+          <div class="t-label">03 ファン化・関係構築</div>
+          <div class="t-body">深く刺さり、フォロー・保存につながる。</div>
+        </div>
+      </div>
+
+      <div class="post-grid">
+        <div class="post-card">
+          <span class="p-tag">ファン化・関係構築</span>
+          <div class="p-title">「英語との出会いは人生の分岐点だった」</div>
+          <div class="p-stats">
+            <div class="p-stat"><div class="v mono">67,174</div><div class="l">Views</div></div>
+            <div class="p-stat"><div class="v mono">52,001</div><div class="l">Reach</div></div>
+            <div class="p-stat"><div class="v mono">372</div><div class="l">Saves</div></div>
+          </div>
+          <a class="hc-link" href="https://www.instagram.com/reel/DV_FkQBD-Yi/?stkn=MWJnc29mN3J4NDkwZg==" target="_blank" rel="noopener">投稿を見る ↗</a>
+        </div>
+        <div class="post-card">
+          <span class="p-tag">リーチ×ファン化</span>
+          <div class="p-title">「POV: 人生は壁だらけ」</div>
+          <div class="p-stats">
+            <div class="p-stat"><div class="v mono">101,545</div><div class="l">Views</div></div>
+            <div class="p-stat"><div class="v mono">70,892</div><div class="l">Reach</div></div>
+            <div class="p-stat"><div class="v mono">198</div><div class="l">Saves</div></div>
+          </div>
+          <a class="hc-link" href="https://www.instagram.com/reel/DWyhVpaj4gR/?stkn=aWkwaTF0MTNmaHlr" target="_blank" rel="noopener">投稿を見る ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing" id="contact">
+    <a class="contact-btn" href="mailto:hosoi.contacts@gmail.com">ご相談はこちらから ↗</a>
+  </section>
+
+  <footer>
+    <span>SNS Direction — Hosoi Nao</span>
+    <span>本ページの実績は許諾の範囲で匿名化して掲載しています</span>
+  </footer>
+
+  </div>
+</div>
+
+</body>
+</html>
